@@ -6,12 +6,10 @@ class Solution {
 		int posW = 0;
 		int posH = 0;
 		int temp = 0;
-		int idx = 0;
 
 		for (int i = 0; i < sizes.length; i++) {
 			posW = Math.max(posW, sizes[i][0]);
 			posH = Math.max(posH, sizes[i][1]);
-            //temp = Math.min(sizes[i][0], sizes[i][1]);
 		}
 
 		if (posW >= posH) {
@@ -27,7 +25,6 @@ class Solution {
 				if (sizes[i][0] >= sizes[i][1]) { // 들어오는 명함의 가로가 더 길 때,
 					if (sizes[i][1] >= temp) {
 						temp = sizes[i][1];
-						idx = i;
 					}
 				} else {
 					if (sizes[i][0] > temp)
@@ -38,7 +35,6 @@ class Solution {
 				if (sizes[i][1] >= sizes[i][0]) { // 들어오는 명함의 세로가 더 길 때,
 					if (sizes[i][0] >= temp) {
 						temp = sizes[i][0];
-						idx = i;
 					}
 				} else {
 					if (sizes[i][1] > temp)
