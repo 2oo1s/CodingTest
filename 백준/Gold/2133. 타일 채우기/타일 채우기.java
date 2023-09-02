@@ -11,7 +11,7 @@ class Main {
 			System.out.println(0);
 			return;
 		}
-		
+
 		dp[0] = 1; // 크기가 0일 때,
 		dp[1] = 0; // 못 채우는 경
 		dp[2] = 3; // 3 * 2 채우는 경우
@@ -20,7 +20,7 @@ class Main {
 		for (int i = 4; i <= N; i += 2) {
 			dp[i] = dp[i - 2] * dp[2];
 			for (int j = 0; j < i - 2; j += 2) {
-				dp[i] = dp[i] + dp[j] * 2;
+				dp[i] += dp[j] * 2;
 			}
 		}
 		System.out.println(dp[N]);
