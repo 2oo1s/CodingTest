@@ -58,7 +58,7 @@ public class Main {
 					answer++;
 					dfs(nx, ny, dir);
 
-					return; // 여기서 첨에 return 안해줬는데 다른 답 나와서 넣어보니 정답 why?
+					return;
 				}
 			}
 		}
