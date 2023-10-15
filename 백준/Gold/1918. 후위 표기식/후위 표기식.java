@@ -49,10 +49,8 @@ public class Main {
 			return 2;
 		else if (operator == '+' || operator == '-')
 			return 1;
-		else if (operator == '(' || operator == ')')
+		else // '('와 ')'가 들어왔을 때
 			return 0;
-		else
-			return -1;
 	}
 
 }
