@@ -18,7 +18,7 @@ public class Main {
 
 		String check = br.readLine();
 
-		while (check != null && !check.isEmpty()) {
+		while (check != null) {
 			st = new StringTokenizer(check, " ");
 			String time = st.nextToken();
 			String name = st.nextToken();
