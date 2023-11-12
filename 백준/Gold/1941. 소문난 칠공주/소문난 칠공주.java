@@ -20,20 +20,20 @@ public class Main {
 		}
 		// System.out.println(Arrays.deepToString(board));
 
-		for (int i = 0; i < 25; i++) {
-			boardX[i] = i % 5;
-			boardY[i] = i / 5;
+		for (int i = 0; i < 25; i++) { // 0~24까지 학생들 자리 좌표를 x, y 따로 저장해두기
+			boardX[i] = i / 5;
+			boardY[i] = i % 5;
 		}
 
-		comb(new int[7], 0, 0);
+		comb(new int[7], 0, 0); // 7명의 학생 조합하기
 		System.out.println(answer);
 	}
 
 	// 선택한 학생 담는 배열, 현재 선택된 7공주로 선택된 학생 수, 현재 7공주 후보인 학생
 	public static void comb(int[] list, int idx, int check) {
 
-		if (idx == 7) { // 7명 모두 뽑았다면, 서로 인접하게 앉았는지 확인
-			bfs(list);
+		if (idx == 7) { // 7명 모두 뽑았다면,
+			bfs(list); // 서로 인접하게 앉았는지 확인
 			return;
 		}
 
@@ -65,8 +65,11 @@ public class Main {
 
 			for (int i = 0; i < 4; i++) {
 				for (int next = 1; next < 7; next++) { // list[0]을 기준으로 list[1]부터 인접하게 있는지 확인
-					if (boardX[temp] + dx[i] == boardX[list[next]] && boardY[temp] + dy[i] == boardY[list[next]]
-							&& !visited[next]) {
+					int adjX = boardX[temp] + dx[i]; // 주변 학생 x좌표
+					int adjY = boardY[temp] + dy[i]; // 주변 학생 y좌표
+
+					// 주변 학생의 좌표가 7공주 학생 중 한명의 좌표와 같을 때
+					if (adjX == boardX[list[next]] && adjY == boardY[list[next]] && !visited[next]) {
 						visited[next] = true;
 						q.add(list[next]);
 						cnt++;
@@ -74,7 +77,6 @@ public class Main {
 				}
 			}
 		}
-
 		if (cnt == 7 && dasom >= 4) // 모두 다 인접하게 앉아있고, 다솜파가 4명 이상인 경우
 			answer++;
 	}
