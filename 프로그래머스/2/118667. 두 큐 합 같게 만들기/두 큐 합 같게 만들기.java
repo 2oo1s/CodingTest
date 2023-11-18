@@ -20,7 +20,7 @@ class Solution {
         }
 
         while (sum1 != sum2) {
-            if (answer > (queue1.length + queue2.length) * 2)   // 탈출 조건
+            if (answer > (queue1.length + queue2.length) + 1)   // 탈출 조건
                 return -1;
 
             int temp = 0;
