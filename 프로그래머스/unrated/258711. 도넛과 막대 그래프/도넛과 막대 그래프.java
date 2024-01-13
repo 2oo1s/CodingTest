@@ -2,7 +2,8 @@ class Solution {
     public int[] solution(int[][] edges) {
         int[] answer = new int[4];
         
-        int maxNum = 0;
+        int maxNum = 0; // 그래프에서 사용된 노드 개수
+        
         for(int[] edge : edges){
             int s = edge[0];
             int e = edge[1];
