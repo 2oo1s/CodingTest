@@ -18,7 +18,6 @@ class Solution {
         int[] outCnt = new int[maxNum + 1];
 
         boolean[] fromCore = new boolean[maxNum + 1];
-        boolean[] usedNode = new boolean[maxNum + 1];
 
         int graphTot = 0;   // 그래프 총 개수
         int coreNode = 0;   // 생성노드
@@ -26,9 +25,6 @@ class Solution {
         for (int[] edge : edges) {
             int s = edge[0];
             int e = edge[1];
-
-            usedNode[s] = true;
-            usedNode[e] = true;
 
             inCnt[e] += 1;
             outCnt[s] += 1;
@@ -53,12 +49,10 @@ class Solution {
         }
 
         for (int i = 1; i <= maxNum; i++) {
-            if (usedNode[i]) {
-                if (inCnt[i] == 2 && outCnt[i] == 2)
-                    answer[3] += 1;
-                else if (outCnt[i] == 0)
-                    answer[2] += 1;
-            }
+            if (inCnt[i] == 2 && outCnt[i] == 2)
+                answer[3] += 1;
+            else if (outCnt[i] == 0)
+                answer[2] += 1;
         }
         
         answer[1] = graphTot - answer[2] - answer[3];
