@@ -1,4 +1,4 @@
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Solution {
     public int[] solution(int[] numbers) {
@@ -19,3 +19,5 @@ class Solution {
         return numbers;
     }
 }
+
+// 백준 오큰수랑 비슷
