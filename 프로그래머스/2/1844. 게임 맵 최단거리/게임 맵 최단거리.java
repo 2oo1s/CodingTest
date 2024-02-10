@@ -1,28 +1,30 @@
 import java.util.*;
 
 class Solution {
-	static int[] dx = { 1, 0, -1, 0 };
-	static int[] dy = { 0, 1, 0, -1 };
-	static boolean[][] visited;
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+    static boolean[][] visited;
 
 	public int solution(int[][] maps) {
 		int answer = 0;
-		visited = new boolean[maps.length][maps[0].length];
-		bfs(0, 0, maps);
-
-		answer = maps[maps.length - 1][maps[0].length - 1];
+        visited = new boolean[maps.length][maps[0].length];
+        
+        bfs(0, 0, maps);
+        
+        answer = maps[maps.length - 1][maps[0].length - 1];
+        
 		if (answer == 1)
 			return -1;
 		else
 			return answer;
-	}
-
-	public void bfs(int x, int y, int[][] maps) {
-		visited[x][y] = true;
-		Queue<Integer[]> q = new LinkedList<>();
-		q.add(new Integer[] { x, y });
-
-		while (!q.isEmpty()) {
+    }
+    
+    public void bfs(int x, int y, int[][] maps) {
+        visited[x][y] = true;
+        Queue<Integer[]> q = new LinkedList<>();
+        q.add(new Integer[] { x, y });
+        
+        while (!q.isEmpty()) {
 			Integer[] t = q.poll();
 
 			for (int i = 0; i < 4; i++) {
