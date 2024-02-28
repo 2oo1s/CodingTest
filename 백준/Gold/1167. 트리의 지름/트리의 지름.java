@@ -2,63 +2,64 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int V;
-    static ArrayList<Node> tree[];
+    static int v;
+    static ArrayList<Node>[] graph;
     static boolean[] visited;
+    static int x;
     static int answer = 0;
-    static int temp = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        V = Integer.parseInt(br.readLine());
-        tree = new ArrayList[V + 1];
-        visited = new boolean[V + 1];
+        v = Integer.parseInt(br.readLine());
+        graph = new ArrayList[v + 1];
+        visited = new boolean[v + 1];
 
-        for (int i = 0; i <= V; i++)
-            tree[i] = new ArrayList<>();
+        for (int i = 0; i <= v; i++)
+            graph[i] = new ArrayList<>();
 
-        for (int i = 0; i < V; i++) {
+        for (int i = 0; i < v; i++) {
             st = new StringTokenizer(br.readLine(), " ");
             int s = Integer.parseInt(st.nextToken());
             while (true) {
                 int e = Integer.parseInt(st.nextToken());
                 if (e == -1)
                     break;
-                int d = Integer.parseInt(st.nextToken());
-                tree[s].add(new Node(e, d));
+                int dist = Integer.parseInt(st.nextToken());
+                graph[s].add(new Node(e, dist));
+                graph[e].add(new Node(s, dist));
             }
         }
-        // System.out.println(Arrays.deepToString(tree));
         dfs(1, 0);
-        visited = new boolean[V + 1];
-        dfs(temp, 0);
+        
+        visited = new boolean[v + 1];
+        dfs(x, 0);
+        
         System.out.println(answer);
     }
 
-    public static void dfs(int v, int len) {
+    static public void dfs(int v, int len) {
         if (len > answer) {
             answer = len;
-            temp = v;
+            x = v;
         }
         visited[v] = true;
-
-        for (Node n : tree[v]) {
-            if (!visited[n.v]) {
-                visited[n.v] = true;
-                dfs(n.v, len + n.d);
+        for (Node n : graph[v]) {
+            if (!visited[n.vertex]) {
+                visited[n.vertex] = true;
+                dfs(n.vertex, len + n.dist);
             }
         }
     }
 
     static class Node {
-        int v;  // 연결된 정점 번호
-        int d;  // 거리
+        int vertex;
+        int dist;
 
-        public Node(int v, int d) {
-            this.v = v;
-            this.d = d;
+        public Node(int vertex, int dist) {
+            this.vertex = vertex;
+            this.dist = dist;
         }
     }
 }
