@@ -2,78 +2,70 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    
-	static int N, M, V;
-	static ArrayList<Integer> adjL[];
-	static boolean[] visited;
-	static StringBuilder answer;
+    static ArrayList<Integer>[] graph;
+    static boolean[] visited;
+    static StringBuilder ans;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		answer = new StringBuilder();
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        ans = new StringBuilder();
 
-		N = Integer.parseInt(st.nextToken()); // 정점의 개수
-		M = Integer.parseInt(st.nextToken()); // 간선의 개
-		V = Integer.parseInt(st.nextToken()); // 탐색을 시작할 정점의 번호
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int v = Integer.parseInt(st.nextToken());
 
-		adjL = new ArrayList[N + 1]; // 정점 번호 1 ~ N
-		for (int i = 0; i <= N; i++) {
-			adjL[i] = new ArrayList<>();
-		}
+        graph = new ArrayList[n + 1];
+        visited = new boolean[n + 1];
 
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-			int s = Integer.parseInt(st.nextToken());
-			int e = Integer.parseInt(st.nextToken());
+        for (int i = 0; i <= n; i++)
+            graph[i] = new ArrayList<>();
 
-			adjL[s].add(e);
-			adjL[e].add(s);
-		}
-		// System.out.println(Arrays.deepToString(adjL));
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
 
-		// 여러노드가 연결된 경우 숫자가 작은 노드부터 탐색
-		for (int i = 1; i <= N; i++) {
-			adjL[i].sort(null);
-		}
+            graph[s].add(e);
+            graph[e].add(s);
+        }
 
-		visited = new boolean[N + 1];
+        for (int i = 1; i <= n; i++)
+            graph[i].sort(null);
 
-		dfs(V);
-		answer.append("\n");
-		bfs(V);
+        dfs(v);
+        ans.append("\n");
+        visited = new boolean[n + 1];
+        bfs(v);
 
-		System.out.println(answer);
-	}
+        System.out.println(ans);
+    }
 
-	public static void dfs(int v) {
-		visited[v] = true;
-		answer.append(v).append(" ");
+    public static void dfs(int v) {
+        visited[v] = true;
+        ans.append(v).append(" ");
 
-		for (int j : adjL[v]) {
-			if (!visited[j])
-				dfs(j);
-		}
-	}
+        for (int i : graph[v]) {
+            if (!visited[i])
+                dfs(i);
+        }
+    }
 
-	public static void bfs(int v) {
-		visited = new boolean[N + 1]; // 방문 노드 정보 초기화
-		Queue<Integer> q = new LinkedList<>();
+    public static void bfs(int v) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(v);
+        visited[v] = true;
+        ans.append(v).append(" ");
 
-		visited[v] = true;
-		q.add(v);
-		answer.append(v).append(" ");
-
-		while (!q.isEmpty()) {
-			int c = q.poll();
-
-			for (int j : adjL[c]) {
-				if (!visited[j]) {
-					q.add(j);
-					visited[j] = true;
-					answer.append(j).append(" ");
-				}
-			}
-		}
-	}
+        while (!q.isEmpty()) {
+            int temp = q.poll();
+            for (int i : graph[temp]) {
+                if (!visited[i]) {
+                    q.add(i);
+                    visited[i] = true;
+                    ans.append(i).append(" ");
+                }
+            }
+        }
+    }
 }
