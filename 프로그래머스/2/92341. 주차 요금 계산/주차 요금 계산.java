@@ -11,12 +11,11 @@ class Solution {
             set.add(record[i][1]);
         }
         
-        System.out.println(Arrays.deepToString(record));
+        // System.out.println(Arrays.deepToString(record));
         answer = new int[set.size()];
         String[] carNum = set.toArray(new String[0]);
         
         for(int i = 0; i < carNum.length; i++) {
-            int cnt = 0;               // 인아웃 쌍 이루는지 확인하기 위해
             String car = carNum[i];    // 요금 계산할 차량
             Queue<String> q = new LinkedList<>();  // 각 차량 입출 기록 저장
             
@@ -25,9 +24,7 @@ class Solution {
                     q.add(record[j][0]);
             }   // 차량별 입출 기록 queue에 저장
             
-            System.out.println(q);
-            
-            int tot = 0;
+            int tot = 0;    // 지불해야할 주차요금
             
             while(!q.isEmpty()) {
                 String inTime = q.poll();
@@ -59,7 +56,6 @@ class Solution {
             else
                 answer[i] = fees[1] + (int)(Math.ceil((double)(tot - fees[0]) / fees[2]) * fees[3]);
         }   // 차량별 요금 결제 for문
-        
         
         return answer;
     }
