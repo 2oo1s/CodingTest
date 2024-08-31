@@ -2,23 +2,23 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static ArrayList<Integer>[] graph;
+    static StringBuilder sb;
     static boolean[] visited;
-    static StringBuilder ans;
+    static ArrayList<Integer>[] graph;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        ans = new StringBuilder();
+        sb = new StringBuilder();
 
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         int v = Integer.parseInt(st.nextToken());
 
-        graph = new ArrayList[n + 1];
         visited = new boolean[n + 1];
+        graph = new ArrayList[n + 1];
 
-        for (int i = 0; i <= n; i++)
+        for (int i = 1; i <= n; i++)
             graph[i] = new ArrayList<>();
 
         for (int i = 0; i < m; i++) {
@@ -30,40 +30,59 @@ public class Main {
             graph[e].add(s);
         }
 
+        // 작은 원소부터 탐색해야되니까 정렬
         for (int i = 1; i <= n; i++)
-            graph[i].sort(null);
+            Collections.sort(graph[i]);
 
         dfs(v);
-        ans.append("\n");
         visited = new boolean[n + 1];
+        sb.append("\n");
         bfs(v);
 
-        System.out.println(ans);
+        System.out.println(sb.toString());
     }
 
     public static void dfs(int v) {
         visited[v] = true;
-        ans.append(v).append(" ");
+        sb.append(v).append(" ");
 
-        for (int i : graph[v]) {
-            if (!visited[i])
-                dfs(i);
+        for (int next : graph[v]) {
+            if (!visited[next])
+                dfs(next);
         }
     }
 
+//    public static void bfs(int v) {
+//        Queue<Integer> q = new LinkedList<>();
+//        visited[v] = true;
+//        q.add(v);
+//
+//        while (!q.isEmpty()) {
+//            int cur = q.poll();
+//            for (int next : graph[cur]) {
+//                if (!visited[next]) {
+//                    visited[next] = true;
+//                    q.add(next);
+//                    sb.append(next).append(" ");
+//                }
+//            }
+//        }
+//    }
+
     public static void bfs(int v) {
         Queue<Integer> q = new LinkedList<>();
-        q.add(v);
+
         visited[v] = true;
-        ans.append(v).append(" ");
+        q.add(v);
 
         while (!q.isEmpty()) {
-            int temp = q.poll();
-            for (int i : graph[temp]) {
-                if (!visited[i]) {
-                    q.add(i);
-                    visited[i] = true;
-                    ans.append(i).append(" ");
+            int cur = q.poll();
+            sb.append(cur).append(" ");
+
+            for (int next : graph[cur]) {
+                if (!visited[next]) {
+                    q.add(next);
+                    visited[next] = true;
                 }
             }
         }
